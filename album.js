@@ -10,9 +10,15 @@ function loadAlbums() {
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
-            <h3>📁 ${name}</h3>
-            <p>📷 0 Photos</p>
-        `;
+            card.innerHTML = `
+    <h3>📁 ${name}</h3>
+    <p>📷 0 Photos</p>
+
+    <button onclick="openAlbum('${name}')">
+        📂 Open Album
+    </button>
+`;
+            
         albumList.appendChild(card);
     });
 }
