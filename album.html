@@ -1,1 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Album</title>
+</head>
 
+<body>
+
+<h1 id="albumTitle"></h1>
+
+<script>
+document.getElementById("albumTitle").innerHTML =
+"📁 " + localStorage.getItem("currentAlbum");
+</script>
+
+</body>
+</html>
