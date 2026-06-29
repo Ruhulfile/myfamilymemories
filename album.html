@@ -86,15 +86,45 @@ display:flex;
 
 flex-wrap:wrap;
 
-gap:10px;
+gap:15px;
 
 }
 
-#photos img{
+.photoBox{
 
-width:150px;
+width:160px;
+
+text-align:center;
+
+}
+
+.photoBox img{
+
+width:100%;
 
 border-radius:12px;
+
+display:block;
+
+}
+
+.deleteBtn{
+
+margin-top:8px;
+
+background:#ef4444;
+
+color:white;
+
+padding:10px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+width:100%;
 
 }
 
@@ -108,15 +138,37 @@ border-radius:12px;
 
 <h1 id="albumTitle"></h1>
 
-<input type="file" id="photoInput" accept="image/*" style="display:none;">
+<input
 
-<button class="upload" onclick="document.getElementById('photoInput').click()">
+type="file"
+
+id="photoInput"
+
+accept="image/*"
+
+style="display:none;"
+
+>
+
+<button
+
+class="upload"
+
+onclick="document.getElementById('photoInput').click()"
+
+>
 
 📸 Upload Photo
 
 </button>
 
-<button class="back" onclick="location.href='dashboard.html'">
+<button
+
+class="back"
+
+onclick="location.href='dashboard.html'"
+
+>
 
 ⬅ Back to Dashboard
 
@@ -134,23 +186,33 @@ border-radius:12px;
 
 const album = localStorage.getItem("currentAlbum");
 
-document.getElementById("albumTitle").innerHTML = "📁 " + album;
+document.getElementById("albumTitle").innerHTML =
 
-document.getElementById("photoInput").addEventListener("change", function(e){
+"📁 " + album;
 
-    const file = e.target.files[0];
+const photoInput = document.getElementById("photoInput");
 
-    if(!file) return;
+photoInput.addEventListener("change",function(e){
 
-    const reader = new FileReader();
+const file = e.target.files[0];
 
-    reader.onload = function(event){
+if(!file) return;
 
-        const photos = document.getElementById("photos");
+const reader = new FileReader();
 
-        photos.innerHTML = "";
+reader.onload = function(event){
 
-     const box = document.createElement("div");
+const photos = document.getElementById("photos");
+
+if(photos.innerHTML.includes("No photos yet")){
+
+photos.innerHTML="";
+
+}
+
+const box = document.createElement("div");
+
+box.className="photoBox";
 
 const img = document.createElement("img");
 
@@ -158,25 +220,19 @@ img.src = event.target.result;
 
 const delBtn = document.createElement("button");
 
-delBtn.innerHTML = "🗑 Delete";
+delBtn.className="deleteBtn";
 
-delBtn.style.marginTop = "8px";
+delBtn.innerHTML="🗑 Delete";
 
-delBtn.style.background = "#ef4444";
+delBtn.onclick=function(){
 
-delBtn.style.color = "white";
+box.remove();
 
-delBtn.style.padding = "8px";
+if(photos.children.length===0){
 
-delBtn.style.border = "none";
+photos.innerHTML="<p>No photos yet.</p>";
 
-delBtn.style.borderRadius = "8px";
-
-delBtn.style.cursor = "pointer";
-
-delBtn.onclick = function(){
-
-    box.remove();
+}
 
 };
 
@@ -186,7 +242,9 @@ box.appendChild(delBtn);
 
 photos.appendChild(box);
 
-    reader.readAsDataURL(file);
+};
+
+reader.readAsDataURL(file);
 
 });
 
