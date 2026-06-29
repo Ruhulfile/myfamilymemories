@@ -72,7 +72,7 @@ window.openAlbum = function(name) {
 
     localStorage.setItem("currentAlbum", name);
 
-    alert("Album '" + name + "' open hoga. 🚀");
+    window.location.href = "album.html";
 
 };
 
