@@ -221,6 +221,8 @@ const reader = new FileReader();
 
 reader.onload = function(event){
 
+alert("Wallpaper loaded successfully!");
+  
 document.body.style.backgroundImage =
 "url('" + event.target.result + "')";
 
