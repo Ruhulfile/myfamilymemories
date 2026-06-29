@@ -24,20 +24,25 @@ function loadAlbums() {
 
         card.className = "card";
 
-        card.innerHTML = `
+card.innerHTML = `
+<h3>📁 ${name}</h3>
 
-            <h3>📁 ${name}</h3>
+<p>📷 0 Photos</p>
 
-            <p>📷 0 Photos</p>
+<button onclick="openAlbum('${name}')">
+📂 Open Album
+</button>
 
-            <button onclick="openAlbum('${name}')">
-
-                📂 Open Album
-
-            </button>
-
-        `;
-
+<button
+style="
+margin-top:8px;
+background:#ef4444;
+color:white;
+"
+onclick="deleteAlbum('${name}')">
+🗑 Delete Album
+</button>
+`;
         albumList.appendChild(card);
 
     });
