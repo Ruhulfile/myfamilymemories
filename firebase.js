@@ -1,19 +1,35 @@
 // Firebase SDK
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
+import { getStorage } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-storage.js";
+
 const firebaseConfig = {
+
   apiKey: "AIzaSyAtKtCvzJcSzopF68cVDwSyM3cgonPCTUA",
+
   authDomain: "myfamilymemories-2bea8.firebaseapp.com",
+
   projectId: "myfamilymemories-2bea8",
+
   storageBucket: "myfamilymemories-2bea8.firebasestorage.app",
+
   messagingSenderId: "741638122470",
-  appId: "1:741638122470:web:89772162225d7bfc818427",
+
+  appId: "1:74163812225d7bfc818427",
+
   measurementId: "G-6N3T1NZBKL"
+
 };
 
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+
 export const db = getFirestore(app);
+
+export const storage = getStorage(app);
