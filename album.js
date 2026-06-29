@@ -36,6 +36,16 @@ card.innerHTML = `
 <button
 style="
 margin-top:8px;
+background:#3b82f6;
+color:white;
+"
+onclick="renameAlbum('${name}')">
+✏️ Rename Album
+</button>
+
+<button
+style="
+margin-top:8px;
 background:#ef4444;
 color:white;
 "
