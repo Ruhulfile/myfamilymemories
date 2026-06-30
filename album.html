@@ -145,111 +145,38 @@ onclick="location.href='dashboard.html'">
 
 <script>
 const album = localStorage.getItem("currentAlbum");
-document.getElementById("albumTitle").innerHTML="📁 "+album;
+
+document.getElementById("albumTitle").innerHTML = "📁 " + album;
 
 const photoInput = document.getElementById("photoInput");
+
 const photos = document.getElementById("photos");
+
+// Saved photos load
 
 let savedPhotos = JSON.parse(localStorage.getItem(album)) || [];
 
+photos.innerHTML = "";
+
 savedPhotos.forEach(addPhoto);
 
-function addPhoto(src){    
-    
+// Upload
+
 photoInput.addEventListener("change", function(e){
 
     const files = e.target.files;
 
-    if(files.length===0) return;
-
-    if(photos.innerHTML.includes("No photos yet")){
-        photos.innerHTML="";
-    }
-
     for(const file of files){
-const box = document.createElement("div");
 
-box.className = "photoBox";
+        const reader = new FileReader();
 
-const img = document.createElement("img");
+        reader.onload = function(event){
 
-img.src = src;
+            savedPhotos.push(event.target.result);
 
-img.style.cursor = "pointer";
+            localStorage.setItem(album, JSON.stringify(savedPhotos));
 
-img.onclick = function(){
-
-    document.getElementById("viewer").style.display = "flex";
-
-    document.getElementById("viewerImg").src = this.src;
-
-};
-
-const delBtn = document.createElement("button");
-
-delBtn.className = "deleteBtn";
-
-delBtn.innerHTML = "🗑 Delete";
-
-delBtn.onclick = function(){
-
-    box.remove();
-
-    savedPhotos = savedPhotos.filter(photo => photo !== src);
-
-    localStorage.setItem(album, JSON.stringify(savedPhotos));
-
-    if(photos.children.length===0){
-
-        photos.innerHTML="<p>No photos yet.</p>";
-
-    }
-
-};
-
-box.appendChild(img);
-
-box.appendChild(delBtn);
-
-photos.appendChild(box);
-
-}
-        const reader=new FileReader();
-reader.onload=function(event){
-    savedPhotos.push(event.target.result));
-    localStorage.setItem(album, JSON.stringify(savedPhotos));
-    addPhoto(event.target.result);
-
-};      
-            const box=document.createElement("div");
-            box.className="photoBox";
-
-            const img=document.createElement("img");
-            img.src=event.target.result;
-            img.style.cursor="pointer";
-
-            img.onclick=function(){
-                document.getElementById("viewer").style.display="flex";
-                document.getElementById("viewerImg").src=this.src;
-            };
-
-            const delBtn=document.createElement("button");
-            delBtn.className="deleteBtn";
-            delBtn.innerHTML="🗑 Delete";
-
-            delBtn.onclick=function(){
-
-                box.remove();
-
-                if(photos.children.length===0){
-                    photos.innerHTML="<p>No photos yet.</p>";
-                }
-
-            };
-
-            box.appendChild(img);
-            box.appendChild(delBtn);
-            photos.appendChild(box);
+            addPhoto(event.target.result);
 
         };
 
@@ -259,18 +186,78 @@ reader.onload=function(event){
 
 });
 
-document.getElementById("closeViewer").onclick=function(){
-    document.getElementById("viewer").style.display="none";
+// Add Photo
+
+function addPhoto(src){
+
+    if(photos.innerHTML.includes("No photos yet")){
+
+        photos.innerHTML = "";
+
+    }
+
+    const box = document.createElement("div");
+
+    box.className = "photoBox";
+
+    const img = document.createElement("img");
+
+    img.src = src;
+
+    img.onclick = function(){
+
+        document.getElementById("viewer").style.display = "flex";
+
+        document.getElementById("viewerImg").src = src;
+
+    };
+
+    const delBtn = document.createElement("button");
+
+    delBtn.className = "deleteBtn";
+
+    delBtn.innerHTML = "🗑 Delete";
+
+    delBtn.onclick = function(){
+
+        box.remove();
+
+        savedPhotos = savedPhotos.filter(photo => photo !== src);
+
+        localStorage.setItem(album, JSON.stringify(savedPhotos));
+
+        if(savedPhotos.length===0){
+
+            photos.innerHTML = "<p>No photos yet.</p>";
+
+        }
+
+    };
+
+    box.appendChild(img);
+
+    box.appendChild(delBtn);
+
+    photos.appendChild(box);
+
+}
+
+// Close Viewer
+
+document.getElementById("closeViewer").onclick = function(){
+
+    document.getElementById("viewer").style.display = "none";
+
 };
 
-document.getElementById("viewer").onclick=function(e){
+document.getElementById("viewer").onclick = function(e){
+
     if(e.target.id==="viewer"){
+
         this.style.display="none";
+
     }
+
 };
 
 </script>
-
-</body>
-</html>
-``
