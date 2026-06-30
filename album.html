@@ -150,6 +150,12 @@ document.getElementById("albumTitle").innerHTML="📁 "+album;
 const photoInput = document.getElementById("photoInput");
 const photos = document.getElementById("photos");
 
+let savedPhotos = JSON.parse(localStorage.getItem(album)) || [];
+
+savedPhotos.forEach(addPhoto);
+
+function addPhoto(src){    
+    
 photoInput.addEventListener("change", function(e){
 
     const files = e.target.files;
@@ -161,7 +167,53 @@ photoInput.addEventListener("change", function(e){
     }
 
     for(const file of files){
+const box = document.createElement("div");
 
+box.className = "photoBox";
+
+const img = document.createElement("img");
+
+img.src = src;
+
+img.style.cursor = "pointer";
+
+img.onclick = function(){
+
+    document.getElementById("viewer").style.display = "flex";
+
+    document.getElementById("viewerImg").src = this.src;
+
+};
+
+const delBtn = document.createElement("button");
+
+delBtn.className = "deleteBtn";
+
+delBtn.innerHTML = "🗑 Delete";
+
+delBtn.onclick = function(){
+
+    box.remove();
+
+    savedPhotos = savedPhotos.filter(photo => photo !== src);
+
+    localStorage.setItem(album, JSON.stringify(savedPhotos));
+
+    if(photos.children.length===0){
+
+        photos.innerHTML="<p>No photos yet.</p>";
+
+    }
+
+};
+
+box.appendChild(img);
+
+box.appendChild(delBtn);
+
+photos.appendChild(box);
+
+}
         const reader=new FileReader();
 
         reader.onload=function(event){
