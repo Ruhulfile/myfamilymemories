@@ -215,9 +215,12 @@ photos.appendChild(box);
 
 }
         const reader=new FileReader();
+reader.onload=function(event){
+    savedPhotos.push(event.target.result));
+    localStorage.setItem(album, JSON.stringify(savedPhotos));
+    addPhoto(event.target.result);
 
-        reader.onload=function(event){
-
+};      
             const box=document.createElement("div");
             box.className="photoBox";
 
